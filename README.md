@@ -15,9 +15,9 @@ Built with the [Klik](https://github.com/awnit-singh/klik-landing) design system
 | **Sound & Music** | Loudness (LUFS) + loudness range · Auditory change rate; music/SFX vs. speech ratio |
 | **Content & Themes** | Fantasy/impossible-event density · Violence (+ consequences shown?) · Prosocial acts · Scariness/threat · Representation & role balance |
 | **Language & Learning** | Dialogue density, vocabulary, readability · Language-modeling cues · Interactivity (direct address, pauses) · Curriculum-standard alignment |
-| **Roll-up** | Age-appropriateness — a weighted age-fit score (0–100), with weights set per age band |
+| **Roll-up** | Age-appropriateness — one weighted score (0–100) per show, with weights set per age band |
 
-Scores are **age-fit**, not quality grades: a fast, loud show can be fine for a nine-year-old and wrong for a toddler. The same measurement scores differently in different bands.
+A score says how well a show fits its target age — not whether it's good TV. A fast, loud show can be fine for a nine-year-old and wrong for a toddler, so the same measurement scores differently in different bands. Scores use a traffic-light scale: green (80+), amber (60–79), red (below 60) — judgment colors are reserved for scores and never used decoratively.
 
 ## Sample dataset
 

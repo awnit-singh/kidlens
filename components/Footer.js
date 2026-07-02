@@ -38,8 +38,7 @@ export default function Footer() {
           minWidth: 260,
         }}
       >
-        Measured media for growing minds · Proof of concept — sample data are
-        illustrative
+        Measured media for growing minds · proof of concept
       </div>
       <div
         style={{

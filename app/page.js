@@ -6,15 +6,16 @@ import {
   SHOWS,
   getShow,
   showsByAgeGroup,
-  scoreColor,
+  scoreTier,
 } from "@/lib/data";
+import { Legend, ScorePill } from "@/components/Score";
 
 function Hero() {
   return (
     <header
       style={{
         position: "relative",
-        padding: "90px 7vw 100px",
+        padding: "56px 7vw 64px",
         overflow: "hidden",
       }}
     >
@@ -23,8 +24,8 @@ function Hero() {
         aria-hidden="true"
         style={{
           position: "absolute",
-          width: 440,
-          height: 380,
+          width: 420,
+          height: 360,
           background: "var(--blue-100)",
           borderRadius: "42% 58% 63% 37% / 48% 42% 58% 52%",
           right: -90,
@@ -36,8 +37,8 @@ function Hero() {
         aria-hidden="true"
         style={{
           position: "absolute",
-          width: 360,
-          height: 320,
+          width: 340,
+          height: 300,
           background: "var(--coral-100)",
           borderRadius: "55% 45% 38% 62% / 52% 58% 42% 48%",
           left: -120,
@@ -45,34 +46,20 @@ function Hero() {
           animation: "floaty 11s ease-in-out infinite",
         }}
       />
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          right: 160,
-          top: 120,
-          width: 160,
-          height: 160,
-          border: "3px solid var(--green-500)",
-          borderRadius: "50%",
-          opacity: 0.55,
-          animation: "floaty 7s ease-in-out infinite",
-        }}
-      />
 
-      <div className="reveal" style={{ position: "relative", maxWidth: 700 }}>
+      <div className="reveal" style={{ position: "relative", maxWidth: 680 }}>
         <div
           style={{
             display: "inline-block",
             fontWeight: 700,
-            fontSize: 13,
+            fontSize: 12,
             letterSpacing: ".08em",
             textTransform: "uppercase",
-            color: "var(--green-500)",
-            background: "var(--green-100)",
-            padding: "6px 14px",
+            color: "var(--ink-500)",
+            background: "var(--cream-200)",
+            padding: "5px 12px",
             borderRadius: 999,
-            marginBottom: 26,
+            marginBottom: 20,
           }}
         >
           Proof of concept · sample data
@@ -82,7 +69,7 @@ function Hero() {
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--coral-500)",
-            fontSize: 80,
+            fontSize: 64,
             lineHeight: 1.02,
             margin: 0,
           }}
@@ -91,24 +78,22 @@ function Hero() {
         </h1>
         <p
           style={{
-            fontSize: 21,
-            lineHeight: 1.55,
+            fontSize: 19,
+            lineHeight: 1.5,
             color: "var(--ink-700)",
-            maxWidth: 560,
-            margin: "26px 0 0",
+            maxWidth: 540,
+            margin: "18px 0 0",
           }}
         >
-          KidLens measures children&apos;s TV on 15 signals — cuts per minute,
-          loudness, prosocial acts, language cues, and more — so you can see
-          what a show actually does to a young brain, not just what it&apos;s
-          about.
+          We measure kids&apos; TV on 15 signals — pacing, loudness, kindness,
+          language — and score how well each show fits its age group.
         </p>
         <div
           style={{
             display: "flex",
-            gap: 16,
+            gap: 14,
             alignItems: "center",
-            marginTop: 38,
+            marginTop: 28,
             flexWrap: "wrap",
           }}
         >
@@ -116,12 +101,12 @@ function Hero() {
             className="btnp"
             href="/shows"
             style={{
-              fontSize: 18,
+              fontSize: 17,
               background: "var(--coral-500)",
               color: "#fff",
               border: "2px solid var(--coral-500)",
               borderRadius: 999,
-              padding: "15px 34px",
+              padding: "13px 30px",
             }}
           >
             Browse rated shows
@@ -130,12 +115,12 @@ function Hero() {
             className="btnp"
             href="/methodology"
             style={{
-              fontSize: 18,
+              fontSize: 17,
               background: "transparent",
               color: "var(--coral-500)",
               border: "2px solid var(--coral-500)",
               borderRadius: 999,
-              padding: "15px 30px",
+              padding: "13px 26px",
             }}
           >
             How we measure
@@ -146,42 +131,41 @@ function Hero() {
             display: "flex",
             gap: 8,
             alignItems: "center",
-            marginTop: 26,
+            marginTop: 22,
             color: "var(--ink-500)",
-            fontSize: 15,
-            fontWeight: 600,
+            fontSize: 14,
+            fontWeight: 700,
           }}
         >
           <i
             className="ph-fill ph-ruler"
-            style={{ color: "var(--green-500)", fontSize: 20 }}
+            style={{ color: "var(--green-500)", fontSize: 18 }}
           />
           {METRICS.length + 1} signals · {SHOWS.length} shows ·{" "}
-          {AGE_GROUPS.length} age bands · measured, not vibes
+          {AGE_GROUPS.length} age groups
         </div>
       </div>
     </header>
   );
 }
 
-/* Two shows aimed at the same age can have wildly different sensory
-   profiles — the founding observation behind KidLens. */
+/* Two toddler shows, three signals, one point: content warnings can't
+   see the difference — measurement can. */
 function Contrast() {
-  const a = getShow("ms-rachel");
-  const b = getShow("cocomelon");
+  const shows = [getShow("ms-rachel"), getShow("cocomelon")];
   const rows = [
     { id: "cuts", label: "Cuts per minute" },
     { id: "loudness", label: "Loudness" },
     { id: "interactivity", label: "Interactivity" },
   ];
   return (
-    <section style={{ padding: "40px 7vw 96px", textAlign: "center" }}>
+    <section style={{ padding: "24px 7vw 64px", textAlign: "center" }}>
       <h2
         className="kd-h2"
         style={{
           fontFamily: "var(--font-display)",
           color: "var(--coral-500)",
-          fontSize: 52,
+          fontSize: 42,
           margin: 0,
         }}
       >
@@ -189,34 +173,37 @@ function Contrast() {
       </h2>
       <p
         style={{
-          fontFamily: "var(--font-display)",
-          color: "var(--green-500)",
-          fontSize: 28,
-          margin: "8px 0 48px",
+          fontSize: 16.5,
+          color: "var(--ink-500)",
+          margin: "8px auto 12px",
+          maxWidth: 560,
+          lineHeight: 1.5,
         }}
       >
-        Two toddler favorites, measured side by side
+        Neither toddler favorite has a frame of violence — but one waits for
+        your child to answer, and one cuts every three seconds.
       </p>
+      <Legend style={{ marginBottom: 28 }} />
       <div
         className="kd-grid-2"
         style={{
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
-          gap: 30,
-          maxWidth: 940,
+          gap: 22,
+          maxWidth: 880,
           margin: "0 auto",
         }}
       >
-        {[a, b].map((show) => (
+        {shows.map((show) => (
           <Link
             key={show.slug}
             href={`/shows/${show.slug}`}
             className="fcard"
             style={{
               background: "#fff",
-              border: `2px solid ${scoreColor(show.overall)}`,
+              border: "2px solid var(--cream-200)",
               borderRadius: 6,
-              padding: "30px 28px",
+              padding: "24px",
               textAlign: "left",
               boxShadow: "var(--shadow-card)",
               textDecoration: "none",
@@ -227,41 +214,36 @@ function Contrast() {
                 display: "flex",
                 justifyContent: "space-between",
                 alignItems: "center",
-                marginBottom: 20,
+                marginBottom: 18,
+                gap: 12,
               }}
             >
               <h3
                 style={{
                   fontFamily: "var(--font-display)",
                   color: "var(--ink-900)",
-                  fontSize: 26,
+                  fontSize: 24,
                   margin: 0,
                 }}
               >
                 {show.title}
               </h3>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 30,
-                  color: scoreColor(show.overall),
-                }}
-              >
-                {show.overall}
-              </span>
+              <ScorePill score={show.overall} />
             </div>
             {rows.map((r) => {
               const m = show.metrics[r.id];
+              const tier = scoreTier(m.score);
               return (
-                <div key={r.id} style={{ marginBottom: 16 }}>
+                <div key={r.id} style={{ marginBottom: 14 }}>
                   <div
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      fontSize: 14,
+                      fontSize: 13.5,
                       fontWeight: 800,
                       color: "var(--ink-700)",
-                      marginBottom: 6,
+                      marginBottom: 5,
+                      gap: 12,
                     }}
                   >
                     <span>{r.label}</span>
@@ -274,7 +256,7 @@ function Contrast() {
                       className="scorebar-fill"
                       style={{
                         width: `${m.score}%`,
-                        background: scoreColor(m.score),
+                        background: tier.color,
                       }}
                     />
                   </div>
@@ -284,57 +266,33 @@ function Contrast() {
           </Link>
         ))}
       </div>
-      <p
-        style={{
-          maxWidth: 640,
-          margin: "36px auto 0",
-          fontSize: 17,
-          lineHeight: 1.6,
-          color: "var(--ink-500)",
-        }}
-      >
-        Neither show has a frame of violence. But one holds a shot for ten
-        seconds and waits for your toddler to answer — the other cuts every
-        three seconds and never pauses. That difference doesn&apos;t show up on
-        a content warning. It shows up here.
-      </p>
     </section>
   );
 }
 
 function WhatWeMeasure() {
   return (
-    <section style={{ padding: "96px 7vw", background: "var(--cream-50)" }}>
+    <section style={{ padding: "56px 7vw", background: "var(--cream-50)" }}>
       <div style={{ textAlign: "center" }}>
         <h2
           className="kd-h2"
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--coral-500)",
-            fontSize: 52,
-            margin: 0,
+            fontSize: 42,
+            margin: "0 0 36px",
           }}
         >
           What we measure
         </h2>
-        <p
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--green-500)",
-            fontSize: 28,
-            margin: "8px 0 60px",
-          }}
-        >
-          Fifteen signals in five families, rolled into one age-fit score
-        </p>
       </div>
       <div
         className="kd-grid-3"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(3,1fr)",
-          gap: 30,
-          maxWidth: 1080,
+          gap: 18,
+          maxWidth: 1040,
           margin: "0 auto",
         }}
       >
@@ -344,40 +302,52 @@ function WhatWeMeasure() {
             className="fcard"
             style={{
               background: "#fff",
-              border: `2px solid ${g.color}`,
+              border: "2px solid var(--cream-200)",
               borderRadius: 6,
-              padding: "34px 28px",
+              padding: "22px 20px",
               textAlign: "left",
               boxShadow: "var(--shadow-card)",
             }}
           >
-            <i className={g.icon} style={{ color: g.color, fontSize: 46 }} />
-            <h3
+            <div
               style={{
-                fontFamily: "var(--font-display)",
-                color: "var(--ink-900)",
-                fontSize: 27,
-                margin: "18px 0 10px",
+                display: "flex",
+                alignItems: "center",
+                gap: 10,
+                marginBottom: 8,
               }}
             >
-              {g.label}
-            </h3>
+              <i
+                className={g.icon}
+                style={{ color: "var(--coral-500)", fontSize: 28 }}
+              />
+              <h3
+                style={{
+                  fontFamily: "var(--font-display)",
+                  color: "var(--ink-900)",
+                  fontSize: 22,
+                  margin: 0,
+                }}
+              >
+                {g.label}
+              </h3>
+            </div>
             <p
               style={{
-                fontSize: 16,
-                lineHeight: 1.55,
-                color: "var(--ink-500)",
-                margin: "0 0 14px",
+                fontSize: 14.5,
+                lineHeight: 1.5,
+                color: "var(--ink-700)",
+                margin: "0 0 8px",
               }}
             >
               {g.blurb}
             </p>
             <div
               style={{
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: 700,
-                color: "var(--ink-700)",
-                lineHeight: 1.7,
+                color: "var(--ink-500)",
+                lineHeight: 1.6,
               }}
             >
               {METRICS.filter((m) => m.group === g.id)
@@ -392,37 +362,45 @@ function WhatWeMeasure() {
             background: "var(--coral-100)",
             border: "2px solid var(--coral-500)",
             borderRadius: 6,
-            padding: "34px 28px",
+            padding: "22px 20px",
             textAlign: "left",
             boxShadow: "var(--shadow-card)",
           }}
         >
-          <i
-            className="ph-fill ph-seal-check"
-            style={{ color: "var(--coral-500)", fontSize: 46 }}
-          />
-          <h3
+          <div
             style={{
-              fontFamily: "var(--font-display)",
-              color: "var(--ink-900)",
-              fontSize: 27,
-              margin: "18px 0 10px",
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 8,
             }}
           >
-            Age-appropriateness
-          </h3>
+            <i
+              className="ph-fill ph-seal-check"
+              style={{ color: "var(--coral-500)", fontSize: 28 }}
+            />
+            <h3
+              style={{
+                fontFamily: "var(--font-display)",
+                color: "var(--ink-900)",
+                fontSize: 22,
+                margin: 0,
+              }}
+            >
+              One score per show
+            </h3>
+          </div>
           <p
             style={{
-              fontSize: 16,
-              lineHeight: 1.55,
+              fontSize: 14.5,
+              lineHeight: 1.5,
               color: "var(--ink-700)",
               margin: 0,
             }}
           >
-            The fifteenth signal is the headline: every measurement is judged
-            against the target age band and rolled into one age-fit score. Not
-            &quot;is this show good?&quot; — &quot;is this show right for this
-            brain, right now?&quot;
+            Every signal is judged against the show&apos;s target age group,
+            then rolled into a single 0–100 score. Not &quot;is it good?&quot;
+            — &quot;is it right for this age?&quot;
           </p>
         </div>
       </div>
@@ -432,35 +410,25 @@ function WhatWeMeasure() {
 
 function BrowseByAge() {
   return (
-    <section style={{ padding: "96px 7vw", textAlign: "center" }}>
+    <section style={{ padding: "56px 7vw", textAlign: "center" }}>
       <h2
         className="kd-h2"
         style={{
           fontFamily: "var(--font-display)",
           color: "var(--coral-500)",
-          fontSize: 52,
-          margin: 0,
+          fontSize: 42,
+          margin: "0 0 36px",
         }}
       >
         Browse by age
       </h2>
-      <p
-        style={{
-          fontFamily: "var(--font-display)",
-          color: "var(--green-500)",
-          fontSize: 28,
-          margin: "8px 0 60px",
-        }}
-      >
-        The same show can be perfect at eight and overwhelming at three
-      </p>
       <div
         className="kd-grid-4"
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(4,1fr)",
-          gap: 24,
-          maxWidth: 1120,
+          gap: 18,
+          maxWidth: 1080,
           margin: "0 auto",
         }}
       >
@@ -471,21 +439,21 @@ function BrowseByAge() {
             className="fcard"
             style={{
               background: a.tint,
-              border: `2px solid ${a.color}`,
+              border: "2px solid var(--cream-200)",
               borderRadius: 6,
-              padding: "32px 24px",
+              padding: "22px 20px",
               textAlign: "left",
               boxShadow: "var(--shadow-card)",
               textDecoration: "none",
             }}
           >
-            <i className={a.icon} style={{ color: a.color, fontSize: 44 }} />
+            <i className={a.icon} style={{ color: a.color, fontSize: 34 }} />
             <h3
               style={{
                 fontFamily: "var(--font-display)",
                 color: "var(--ink-900)",
-                fontSize: 26,
-                margin: "16px 0 2px",
+                fontSize: 23,
+                margin: "10px 0 2px",
               }}
             >
               {a.label}
@@ -493,17 +461,17 @@ function BrowseByAge() {
             <div
               style={{
                 fontWeight: 800,
-                fontSize: 14,
+                fontSize: 13,
                 color: "var(--ink-500)",
-                marginBottom: 12,
+                marginBottom: 8,
               }}
             >
-              Ages {a.range} · {showsByAgeGroup(a.id).length} shows rated
+              Ages {a.range} · {showsByAgeGroup(a.id).length} shows
             </div>
             <p
               style={{
-                fontSize: 15,
-                lineHeight: 1.55,
+                fontSize: 13.5,
+                lineHeight: 1.5,
                 color: "var(--ink-700)",
                 margin: 0,
               }}
@@ -523,7 +491,7 @@ function CTA() {
       style={{
         position: "relative",
         overflow: "hidden",
-        padding: "96px 7vw",
+        padding: "56px 7vw",
         textAlign: "center",
         background: "var(--green-100)",
       }}
@@ -532,8 +500,8 @@ function CTA() {
         aria-hidden="true"
         style={{
           position: "absolute",
-          width: 300,
-          height: 260,
+          width: 280,
+          height: 240,
           background: "var(--cream-100)",
           borderRadius: "42% 58% 63% 37% / 48% 42% 58% 52%",
           right: -80,
@@ -547,7 +515,7 @@ function CTA() {
           position: "relative",
           fontFamily: "var(--font-display)",
           color: "var(--coral-500)",
-          fontSize: 48,
+          fontSize: 40,
           margin: 0,
         }}
       >
@@ -556,28 +524,27 @@ function CTA() {
       <p
         style={{
           position: "relative",
-          maxWidth: 620,
-          margin: "18px auto 34px",
-          fontSize: 18,
-          lineHeight: 1.6,
+          maxWidth: 540,
+          margin: "12px auto 24px",
+          fontSize: 16.5,
+          lineHeight: 1.5,
           color: "var(--ink-700)",
         }}
       >
-        Every score on KidLens traces back to a number someone can check —
-        cuts counted, decibels metered, kind acts tallied. Read the
-        methodology and disagree with us precisely.
+        Every score traces back to a number someone can check — cuts counted,
+        decibels metered, kind acts tallied.
       </p>
       <Link
         className="btnp"
         href="/methodology"
         style={{
           position: "relative",
-          fontSize: 18,
+          fontSize: 17,
           background: "var(--coral-500)",
           color: "#fff",
           border: "2px solid var(--coral-500)",
           borderRadius: 999,
-          padding: "15px 34px",
+          padding: "13px 30px",
         }}
       >
         Read the methodology

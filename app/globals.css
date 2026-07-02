@@ -40,6 +40,14 @@
   --accent-tertiary: var(--blue-500);
   --accent-highlight: var(--yellow-500);
 
+  /* ---- Score tiers (judgment colors — never used decoratively) ---- */
+  --score-great: #2E9E5B;
+  --score-great-tint: #E1F3E7;
+  --score-okay: #E8930C;
+  --score-okay-tint: #FCEFD3;
+  --score-poor: #D9392C;
+  --score-poor-tint: #FBE3DF;
+
   /* ---- Type ---- */
   --font-display: "Patrick Hand", "Comic Sans MS", cursive;
   --font-body: "Nunito", system-ui, -apple-system, sans-serif;
@@ -105,7 +113,7 @@ body {
 /* ---- Score bars ---- */
 .scorebar-track {
   width: 100%;
-  height: 10px;
+  height: 8px;
   background: var(--cream-200);
   border-radius: var(--radius-pill);
   overflow: hidden;
@@ -113,6 +121,13 @@ body {
 .scorebar-fill {
   height: 100%;
   border-radius: var(--radius-pill);
+}
+
+.clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -128,12 +143,12 @@ body {
   .kd-grid-2 { grid-template-columns: 1fr !important; }
   .kd-grid-3 { grid-template-columns: 1fr !important; }
   .kd-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
-  .kd-hero-title { font-size: 56px !important; }
-  .kd-h2 { font-size: 38px !important; }
+  .kd-hero-title { font-size: 46px !important; }
+  .kd-h2 { font-size: 32px !important; }
   .kd-metric-row { grid-template-columns: 1fr !important; }
 }
 @media (max-width: 560px) {
   .kd-nav-links { display: none !important; }
   .kd-grid-4 { grid-template-columns: 1fr !important; }
-  .kd-hero-title { font-size: 44px !important; }
+  .kd-hero-title { font-size: 38px !important; }
 }

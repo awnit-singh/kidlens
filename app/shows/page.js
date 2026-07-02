@@ -1,22 +1,23 @@
 import { AGE_GROUPS, showsByAgeGroup } from "@/lib/data";
 import ShowCard from "@/components/ShowCard";
+import { Legend } from "@/components/Score";
 
 export const metadata = {
   title: "Rated shows — KidLens",
   description:
-    "Children's TV shows rated on 15 measured signals, grouped by age band.",
+    "Children's TV shows scored on 15 measured signals, grouped by age.",
 };
 
 export default function ShowsPage() {
   return (
-    <main style={{ padding: "60px 7vw 40px" }}>
+    <main style={{ padding: "44px 7vw 56px" }}>
       <div className="reveal" style={{ maxWidth: 720 }}>
         <h1
           className="kd-hero-title"
           style={{
             fontFamily: "var(--font-display)",
             color: "var(--coral-500)",
-            fontSize: 64,
+            fontSize: 52,
             lineHeight: 1.05,
             margin: 0,
           }}
@@ -25,16 +26,16 @@ export default function ShowsPage() {
         </h1>
         <p
           style={{
-            fontSize: 19,
-            lineHeight: 1.55,
+            fontSize: 16.5,
+            lineHeight: 1.5,
             color: "var(--ink-700)",
-            margin: "18px 0 0",
+            margin: "12px 0 10px",
           }}
         >
-          One or two shows per category in each age band — enough to show how
-          the rating model works. Scores are <strong>age-fit</strong>, judged
-          against the needs of each show&apos;s target audience.
+          Scores say how well a show fits its target age — not whether
+          it&apos;s good TV.
         </p>
+        <Legend />
       </div>
 
       {AGE_GROUPS.map((age) => {
@@ -43,62 +44,54 @@ export default function ShowsPage() {
           <section
             key={age.id}
             id={age.id}
-            style={{ padding: "64px 0 8px", scrollMarginTop: 90 }}
+            style={{ padding: "40px 0 4px", scrollMarginTop: 90 }}
           >
             <div
               style={{
                 display: "flex",
-                alignItems: "center",
-                gap: 14,
-                marginBottom: 6,
+                alignItems: "baseline",
+                gap: 12,
+                flexWrap: "wrap",
+                marginBottom: 18,
               }}
             >
-              <span
+              <h2
+                className="kd-h2"
                 style={{
-                  width: 52,
-                  height: 52,
-                  borderRadius: "50%",
-                  background: age.tint,
-                  display: "inline-flex",
+                  fontFamily: "var(--font-display)",
+                  color: "var(--ink-900)",
+                  fontSize: 34,
+                  margin: 0,
+                  display: "flex",
                   alignItems: "center",
-                  justifyContent: "center",
+                  gap: 10,
                 }}
               >
                 <i
                   className={age.icon}
                   style={{ color: age.color, fontSize: 28 }}
                 />
-              </span>
-              <h2
-                className="kd-h2"
+                {age.label}
+                <span style={{ color: "var(--ink-500)", fontSize: 26 }}>
+                  ages {age.range}
+                </span>
+              </h2>
+              <span
                 style={{
-                  fontFamily: "var(--font-display)",
-                  color: "var(--ink-900)",
-                  fontSize: 42,
-                  margin: 0,
+                  fontSize: 14,
+                  color: "var(--ink-500)",
+                  fontWeight: 600,
                 }}
               >
-                {age.label}{" "}
-                <span style={{ color: age.color }}>· ages {age.range}</span>
-              </h2>
+                {age.blurb}
+              </span>
             </div>
-            <p
-              style={{
-                maxWidth: 680,
-                fontSize: 16.5,
-                lineHeight: 1.55,
-                color: "var(--ink-500)",
-                margin: "6px 0 30px",
-              }}
-            >
-              {age.blurb}
-            </p>
             <div
               className="kd-grid-3"
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(3,1fr)",
-                gap: 26,
+                gap: 18,
               }}
             >
               {shows.map((show) => (

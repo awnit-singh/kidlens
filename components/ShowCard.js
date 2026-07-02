@@ -1,9 +1,8 @@
 import Link from "next/link";
-import { getAgeGroup, getCategory, scoreColor } from "@/lib/data";
-import { Chip } from "@/components/Score";
+import { getCategory } from "@/lib/data";
+import { Chip, ScorePill } from "@/components/Score";
 
 export default function ShowCard({ show }) {
-  const age = getAgeGroup(show.ageGroup);
   const cat = getCategory(show.category);
   return (
     <Link
@@ -12,9 +11,9 @@ export default function ShowCard({ show }) {
       style={{
         display: "block",
         background: "#fff",
-        border: `2px solid ${age.color}`,
+        border: "2px solid var(--cream-200)",
         borderRadius: 6,
-        padding: "28px 26px",
+        padding: "20px 20px 18px",
         textAlign: "left",
         boxShadow: "var(--shadow-card)",
         textDecoration: "none",
@@ -25,62 +24,42 @@ export default function ShowCard({ show }) {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
-          gap: 14,
+          gap: 12,
         }}
       >
-        <h3
-          style={{
-            fontFamily: "var(--font-display)",
-            color: "var(--ink-900)",
-            fontSize: 26,
-            lineHeight: 1.15,
-            margin: 0,
-          }}
-        >
-          {show.title}
-        </h3>
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: "50%",
-            border: `3px solid ${scoreColor(show.overall)}`,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily: "var(--font-display)",
-            fontSize: 22,
-            color: "var(--ink-900)",
-            flexShrink: 0,
-            background: "var(--cream-50)",
-          }}
-        >
-          {show.overall}
+        <div>
+          <h3
+            style={{
+              fontFamily: "var(--font-display)",
+              color: "var(--ink-900)",
+              fontSize: 24,
+              lineHeight: 1.12,
+              margin: 0,
+            }}
+          >
+            {show.title}
+          </h3>
+          <div
+            style={{
+              color: "var(--ink-500)",
+              fontSize: 13,
+              fontWeight: 700,
+              margin: "4px 0 0",
+            }}
+          >
+            {show.network} · {show.year} · {show.epLength}
+          </div>
         </div>
+        <ScorePill score={show.overall} />
       </div>
-      <div
-        style={{
-          color: "var(--ink-500)",
-          fontSize: 14,
-          fontWeight: 700,
-          margin: "4px 0 14px",
-        }}
-      >
-        {show.network} · {show.year} · {show.epLength}
-      </div>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14 }}>
-        <Chip
-          icon={age.icon}
-          label={`${age.label} ${age.range}`}
-          color={age.color}
-          tint={age.tint}
-        />
-        <Chip icon={cat.icon} label={cat.label} color="var(--ink-500)" />
+      <div style={{ margin: "12px 0 10px" }}>
+        <Chip icon={cat.icon} label={cat.label} />
       </div>
       <p
+        className="clamp-2"
         style={{
-          fontSize: 15.5,
-          lineHeight: 1.55,
+          fontSize: 14.5,
+          lineHeight: 1.5,
           color: "var(--ink-500)",
           margin: 0,
         }}
