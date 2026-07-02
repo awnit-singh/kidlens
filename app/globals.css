@@ -1,0 +1,139 @@
+/* ============================================================
+   KidLens design system — shared with the Klik design bundle
+   (tokens/colors.css, typography.css, spacing.css)
+   ============================================================ */
+:root {
+  /* ---- Base palette ---- */
+  --cream-50: #FFFBEF;
+  --cream-100: #FFF9E6;   /* primary page background */
+  --cream-200: #FBF1D6;
+
+  --coral-500: #F1683C;   /* primary brand / headings / CTA */
+  --coral-600: #E1572C;
+  --coral-100: #FFEAD7;
+
+  --green-500: #7CC576;
+  --green-300: #A7D89E;
+  --green-100: #E6EFD2;
+
+  --blue-500: #64B5F6;
+  --blue-100: #DDEAF2;
+
+  --yellow-500: #FBC02D;
+  --yellow-100: #FDF0C4;
+
+  --ink-900: #2E3D44;
+  --ink-700: #41525A;
+  --ink-500: #5C6D74;
+  --white: #FFFFFF;
+
+  /* ---- Semantic aliases ---- */
+  --surface-page: var(--cream-100);
+  --surface-card: var(--white);
+  --text-display: var(--coral-500);
+  --text-heading: var(--ink-900);
+  --text-body: var(--ink-700);
+  --text-muted: var(--ink-500);
+
+  --accent-primary: var(--coral-500);
+  --accent-secondary: var(--green-500);
+  --accent-tertiary: var(--blue-500);
+  --accent-highlight: var(--yellow-500);
+
+  /* ---- Type ---- */
+  --font-display: "Patrick Hand", "Comic Sans MS", cursive;
+  --font-body: "Nunito", system-ui, -apple-system, sans-serif;
+
+  /* ---- Shape ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+  --radius-blob: 42% 58% 63% 37% / 48% 42% 58% 52%;
+  --radius-blob-alt: 55% 45% 38% 62% / 52% 58% 42% 48%;
+  --shadow-card: 0 1px 2px rgba(46, 61, 68, 0.06);
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream-100);
+  color: var(--ink-700);
+  overflow-x: hidden;
+}
+
+/* ---- Motion ---- */
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-14px); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.reveal { animation: fadeUp 0.7s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+
+/* ---- Interactive primitives ---- */
+.navlink {
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.navlink:hover { color: var(--coral-500); }
+
+.btnp {
+  font-family: var(--font-body);
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
+  transition: transform 0.08s ease, filter 0.15s ease;
+}
+.btnp:hover  { filter: brightness(1.04); }
+.btnp:active { transform: scale(0.96); }
+
+.fcard {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.fcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(46, 61, 68, 0.12);
+}
+
+/* ---- Score bars ---- */
+.scorebar-track {
+  width: 100%;
+  height: 10px;
+  background: var(--cream-200);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.scorebar-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  [class*="blob"],
+  .floaty { animation: none !important; }
+  .btnp, .fcard { transition: none; }
+}
+
+/* ---- Responsive: collapse the multi-column grids on small screens ---- */
+@media (max-width: 860px) {
+  .kd-nav-links { gap: 18px !important; }
+  .kd-grid-2 { grid-template-columns: 1fr !important; }
+  .kd-grid-3 { grid-template-columns: 1fr !important; }
+  .kd-grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  .kd-hero-title { font-size: 56px !important; }
+  .kd-h2 { font-size: 38px !important; }
+  .kd-metric-row { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 560px) {
+  .kd-nav-links { display: none !important; }
+  .kd-grid-4 { grid-template-columns: 1fr !important; }
+  .kd-hero-title { font-size: 44px !important; }
+}
