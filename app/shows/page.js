@@ -1,4 +1,5 @@
-import { AGE_GROUPS, showsByAgeGroup } from "@/lib/data";
+import { AGE_GROUPS } from "@/lib/data";
+import { getShows } from "@/lib/store";
 import ShowCard from "@/components/ShowCard";
 import { Legend } from "@/components/Score";
 
@@ -8,7 +9,8 @@ export const metadata = {
     "Children's TV shows scored on 15 measured signals, grouped by age.",
 };
 
-export default function ShowsPage() {
+export default async function ShowsPage() {
+  const allShows = await getShows();
   return (
     <main style={{ padding: "44px 7vw 56px" }}>
       <div className="reveal" style={{ maxWidth: 720 }}>
@@ -39,7 +41,8 @@ export default function ShowsPage() {
       </div>
 
       {AGE_GROUPS.map((age) => {
-        const shows = showsByAgeGroup(age.id);
+        const shows = allShows.filter((s) => s.ageGroup === age.id);
+        if (!shows.length) return null;
         return (
           <section
             key={age.id}

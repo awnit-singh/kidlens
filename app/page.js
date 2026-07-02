@@ -3,14 +3,12 @@ import {
   AGE_GROUPS,
   METRIC_GROUPS,
   METRICS,
-  SHOWS,
-  getShow,
-  showsByAgeGroup,
   scoreTier,
 } from "@/lib/data";
+import { getShows } from "@/lib/store";
 import { Legend, ScorePill } from "@/components/Score";
 
-function Hero() {
+function Hero({ showCount }) {
   return (
     <header
       style={{
@@ -141,7 +139,7 @@ function Hero() {
             className="ph-fill ph-ruler"
             style={{ color: "var(--green-500)", fontSize: 18 }}
           />
-          {METRICS.length + 1} signals · {SHOWS.length} shows ·{" "}
+          {METRICS.length + 1} signals · {showCount} shows ·{" "}
           {AGE_GROUPS.length} age groups
         </div>
       </div>
@@ -151,8 +149,12 @@ function Hero() {
 
 /* Two toddler shows, three signals, one point: content warnings can't
    see the difference — measurement can. */
-function Contrast() {
-  const shows = [getShow("ms-rachel"), getShow("cocomelon")];
+function Contrast({ allShows }) {
+  const shows = [
+    allShows.find((s) => s.slug === "ms-rachel"),
+    allShows.find((s) => s.slug === "cocomelon"),
+  ];
+  if (shows.some((s) => !s)) return null;
   const rows = [
     { id: "cuts", label: "Cuts per minute" },
     { id: "loudness", label: "Loudness" },
@@ -408,7 +410,7 @@ function WhatWeMeasure() {
   );
 }
 
-function BrowseByAge() {
+function BrowseByAge({ allShows }) {
   return (
     <section style={{ padding: "56px 7vw", textAlign: "center" }}>
       <h2
@@ -466,7 +468,8 @@ function BrowseByAge() {
                 marginBottom: 8,
               }}
             >
-              Ages {a.range} · {showsByAgeGroup(a.id).length} shows
+              Ages {a.range} ·{" "}
+              {allShows.filter((s) => s.ageGroup === a.id).length} shows
             </div>
             <p
               style={{
@@ -553,13 +556,14 @@ function CTA() {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const shows = await getShows();
   return (
     <main id="top">
-      <Hero />
-      <Contrast />
+      <Hero showCount={shows.length} />
+      <Contrast allShows={shows} />
       <WhatWeMeasure />
-      <BrowseByAge />
+      <BrowseByAge allShows={shows} />
       <CTA />
     </main>
   );

@@ -2,23 +2,25 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
   METRIC_GROUPS,
-  SHOWS,
+  SHOWS as SEED_SHOWS,
   getAgeGroup,
   getCategory,
-  getShow,
   groupScore,
   metricsByGroup,
   scoreTier,
 } from "@/lib/data";
+import { getShowBySlug, getShows } from "@/lib/store";
 import { Chip, Legend, ScoreBar, ScoreDisc } from "@/components/Score";
 
+/* Prerender the seed shows at build time; shows added later through
+   the admin render on demand (dynamicParams default). */
 export function generateStaticParams() {
-  return SHOWS.map((s) => ({ slug: s.slug }));
+  return SEED_SHOWS.map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const show = getShow(slug);
+  const show = await getShowBySlug(slug);
   if (!show) return {};
   return {
     title: `${show.title} — KidLens rating`,
@@ -28,8 +30,9 @@ export async function generateMetadata({ params }) {
 
 export default async function ShowPage({ params }) {
   const { slug } = await params;
-  const show = getShow(slug);
+  const show = await getShowBySlug(slug);
   if (!show) notFound();
+  const allShows = await getShows();
 
   const age = getAgeGroup(show.ageGroup);
   const cat = getCategory(show.category);
@@ -288,7 +291,7 @@ export default async function ShowPage({ params }) {
           More for ages {age.range}
         </h2>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-          {SHOWS.filter(
+          {allShows.filter(
             (s) => s.ageGroup === show.ageGroup && s.slug !== show.slug
           ).map((s) => {
             const tier = scoreTier(s.overall);
